@@ -12,9 +12,11 @@ import sys
 
 
 def main():
-    dry_run = input("Run in dry mode? (Y/N): ").strip().upper()
+    print("Run in dry mode? (Y/N): ", end="", flush=True)
+    dry_run = sys.stdin.readline().strip().upper()
 
-    for line in sys.stdin:
+    with open("create-users.input", "r") as f:
+      for line in f:
 
         match = re.match("^#",line)
 
