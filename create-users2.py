@@ -12,8 +12,8 @@ import sys
 
 
 def main():
-    dry_run = input("Run in dry mode? (Y/N): ")
-    dry_run = dry_run.upper()
+    print("Run in dry mode? (Y/N): ", end="", flush=True)
+    dry_run = sys.stdin.readline().strip().upper()
 
     for line in sys.stdin:
 
