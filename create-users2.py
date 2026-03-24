@@ -5,6 +5,9 @@
 # 3/22/2026
 # 3/22/2026
 
+
+#dry run mode will simulate the actions of the script without actually executing them.
+
 #os is used to execute system level commands, re is used for pattern matching, sys is used to read input from user
 import os
 import re
@@ -14,7 +17,7 @@ import sys
 def main():
     print("Run in dry mode? (Y/N): ", end="", flush=True)
     dry_run = sys.stdin.readline().strip().upper()
-
+    #prompt the user to decide to run whether or not to run dry mode. Y is dry and N actually executes the commands.
     with open("create-users.input", "r") as f:
       for line in f:
 
@@ -25,6 +28,7 @@ def main():
 
         #The if statement is checking if the input has exactly 5 fields. If there is not exactly 5 fields the data is not processed
         if match or len(fields) != 5:
+           #if dry run mode is enabled the script will print commands instead of executing. 
            if dry_run == "Y":
               print("Dry run error: Invalid line skipped:", line.strip())
            continue
@@ -41,7 +45,7 @@ def main():
         print("==> Creating account for %s..." % (username))
         #This command creats a new user account with specified Gecos info without needing a password. 
         cmd = "/usr/sbin/adduser --disabled-password --gecos '%s' %s" % (gecos,username)
-
+        #if dry run is enabled the commands will be printed instead of executed.
         if dry_run == "Y":
            print("Dry run: Would execute:", cmd)
         else:
@@ -51,7 +55,7 @@ def main():
         print("==> Setting the password for %s..." % (username))
         #Builds a command that sets the users password by piping password into passwd command.
         cmd = "/bin/echo -ne '%s\n%s' | /usr/bin/sudo /usr/bin/passwd %s" % (password,password,username)
-
+        #if dry run is enabled the commands will be printed instead of executed. 
         if dry_run == "Y":
            print("Dry run: Would execute:", cmd)
         else:
